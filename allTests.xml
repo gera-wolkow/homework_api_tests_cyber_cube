@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "allTests">
+    <test name = "Create user request tests">
+        <classes>
+            <class name = "apiTests.createTests"/>
+        </classes>
+    </test>
+    <test name = "Update user request tests">
+        <classes>
+            <class name = "apiTests.updateTests"/>
+        </classes>
+    </test>
+    <test name = "Delete user request tests">
+        <classes>
+            <class name = "apiTests.deleteTests"/>
+        </classes>
+    </test>
+</suite>
