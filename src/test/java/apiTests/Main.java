@@ -2,8 +2,13 @@ package apiTests;
 
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
+import sun.rmi.runtime.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 import static io.restassured.RestAssured.given;
 
@@ -48,6 +53,16 @@ public class Main {
         int rightLimit = 122;
         Random random = new Random();
         return random.ints(leftLimit, rightLimit + 1).limit(length).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+    }
+
+    public static long getTimestampFromDate (String data){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            return format.parse(data).getTime();
+        } catch (ParseException e) {
+            return 0;
+        }
     }
 
 }

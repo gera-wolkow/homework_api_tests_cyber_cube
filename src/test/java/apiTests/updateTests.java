@@ -20,11 +20,11 @@ public class updateTests extends setup{
         userDataLocal.put(userJobKey,generateAlphabeticalString(19));
         Response response = createUser(userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 201);
-        Assert.assertNotNull(response.getBody());
+        Assert.assertNotEquals(response.getBody().asString(), "");
         userId = Integer.parseInt(response.path(userIdKey));
     }
 
-    @Test
+    @Test (description = "Update generated User with PUT")
     public static void updateUserPut () {
         JSONObject userDataLocal = new JSONObject(userData);
         String userGeneratedName = generateAlphabeticalString(15);
@@ -33,12 +33,13 @@ public class updateTests extends setup{
         userDataLocal.put(userJobKey, userGeneratedJob);
         Response response = updateUserPut(userId, userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertNotNull(response.getBody());
+        Assert.assertNotEquals(response.getBody().asString(), "");
         Assert.assertEquals(response.path(userNameKey), userGeneratedName);
         Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
 
-    @Test
+    @Test (description = "Update generated User with PATCH")
     public static void updateUserPatch () {
         JSONObject userDataLocal = new JSONObject(userData);
         String userGeneratedName = generateAlphabeticalString(15);
@@ -47,8 +48,9 @@ public class updateTests extends setup{
         userDataLocal.put(userJobKey, userGeneratedJob);
         Response response = updateUserPatch(userId, userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertNotNull(response.getBody());
+        Assert.assertNotEquals(response.getBody().asString(), "");
         Assert.assertEquals(response.path(userNameKey), userGeneratedName);
         Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
 }

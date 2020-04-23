@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Date;
 
 /**
  * Created by iuriiryndin on 22.04.2020
@@ -18,11 +17,11 @@ public class createTests extends setup{
         String userJob = userData.get(userJobKey).toString();
         Response response = createUser(userData);
         Assert.assertEquals(response.getStatusCode(), 201);
-        Assert.assertNotNull(response.getBody());
+        Assert.assertNotEquals(response.getBody().asString(), "");
         Assert.assertEquals(response.path(userNameKey), userName);
         Assert.assertEquals(response.path(userJobKey), userJob);
         Assert.assertTrue(Integer.parseInt( response.path(userIdKey)) > 0 );
-//      Assert.assertTrue((Date)response.path(userCreatedAtKey) < System.currentTimeMillis());
+        Assert.assertTrue(getTimestampFromDate(response.path(userCreatedAtKey)) < System.currentTimeMillis());
     }
 
     @Test (description = "Check User create in case Name element is required", enabled = false)
@@ -31,7 +30,7 @@ public class createTests extends setup{
         userDataLocal.remove(userNameKey);
         Response response = createUser(userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 400);
-        Assert.assertNull(response.getBody());
+        Assert.assertEquals(response.getBody().asString(), "");
     }
 
     @Test (description = "Check User create in case Job element is required", enabled = false)
@@ -40,7 +39,7 @@ public class createTests extends setup{
         userDataLocal.remove(userJobKey);
         Response response = createUser(userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 400);
-        Assert.assertNull(response.getBody());
+        Assert.assertEquals(response.getBody().asString(), "");
     }
 
     @Test (description = "Check User create with empty data", enabled = false)
@@ -50,7 +49,7 @@ public class createTests extends setup{
         userDataLocal.remove(userJobKey);
         Response response = createUser(userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 400);
-        Assert.assertNull(response.getBody());
+        Assert.assertEquals(response.getBody().asString(), "");
     }
 
     @Test (description = "Check User create with generated data")
@@ -62,10 +61,11 @@ public class createTests extends setup{
         userDataLocal.put(userJobKey, userGeneratedJob);
         Response response = createUser(userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 201);
-        Assert.assertNotNull(response.getBody());
+        Assert.assertNotEquals(response.getBody().asString(), "");
         Assert.assertEquals(response.path(userNameKey), userGeneratedName);
         Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
         Assert.assertTrue(Integer.parseInt( response.path(userIdKey)) > 0 );
+        Assert.assertTrue(getTimestampFromDate(response.path(userCreatedAtKey)) < System.currentTimeMillis());
     }
 
 

@@ -1,5 +1,7 @@
 package apiTests;
 
+import io.restassured.RestAssured;
+import io.restassured.parsing.Parser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -24,6 +26,7 @@ public class setup extends Main{
 
     @BeforeSuite
     public static void healthCheck () throws IOException, ParseException {
+        RestAssured.defaultParser = Parser.JSON;
         Assert.assertEquals(getUsers().getStatusCode(), 200);
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader(new File("./src/test/resources/user.json")));
