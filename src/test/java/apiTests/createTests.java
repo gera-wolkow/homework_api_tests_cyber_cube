@@ -43,6 +43,16 @@ public class createTests extends setup{
         Assert.assertNull(response.getBody());
     }
 
+    @Test (description = "Check User create with empty data", enabled = false)
+    public static void createUserWithEmptyData () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userNameKey);
+        userDataLocal.remove(userJobKey);
+        Response response = createUser(userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 400);
+        Assert.assertNull(response.getBody());
+    }
+
     @Test (description = "Check User create with generated data")
     public static void createUserWithRandomData () {
         JSONObject userDataLocal = new JSONObject(userData);
@@ -57,5 +67,6 @@ public class createTests extends setup{
         Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
         Assert.assertTrue(Integer.parseInt( response.path(userIdKey)) > 0 );
     }
+
 
 }
