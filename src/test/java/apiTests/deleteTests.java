@@ -24,17 +24,25 @@ public class deleteTests extends setup{
         userId = Integer.parseInt(response.path(userIdKey));
     }
 
-    @Test
+    @Test (description = "Delete generated user")
     public static void deleteUser () {
         Response response = deleteUser(userId);
         Assert.assertEquals(response.getStatusCode(), 204);
         Assert.assertEquals(response.getBody().asString(), "");
     }
 
-    @Test
+    @Test (description = "Delete unavailable user")
     public static void deleteZeroUser () {
         Response response = deleteUser(0);
         Assert.assertEquals(response.getStatusCode(), 204);
+        Assert.assertEquals(response.getBody().asString(), "");
+    }
+
+    @Test (description = "Delete user using incorrect id format")
+    public static void deleteUserIncorrectId () {
+        String id = "fakeId";
+        Response response = deleteUserIncorrectId(id);
+        Assert.assertEquals(response.getStatusCode(), 400);
         Assert.assertEquals(response.getBody().asString(), "");
     }
 

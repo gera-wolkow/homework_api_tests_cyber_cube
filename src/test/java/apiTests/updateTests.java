@@ -157,4 +157,30 @@ public class updateTests extends setup{
         Assert.assertNotNull(response.path(userJobKey));
         Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
+
+    @Test (description = "Update user using incorrect id format (PUT)")
+    public static void updateUserIncorrectIdPut () {
+        String id = "fakeId";
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
+        String userGeneratedName = generateAlphabeticalString(15);
+        userDataLocal.put(userNameKey,userGeneratedName);
+        String userGeneratedJob = generateAlphabeticalString(17);
+        userDataLocal.put(userJobKey, userGeneratedJob);
+        Response response = updateUserIncorrectIdPut(id, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 400);
+        Assert.assertEquals(response.getBody().asString(), "");
+    }
+
+    @Test (description = "Update user using incorrect id format (PATCH)")
+    public static void updateUserIncorrectIdPatch () {
+        String id = "fakeId";
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
+        String userGeneratedName = generateAlphabeticalString(15);
+        userDataLocal.put(userNameKey,userGeneratedName);
+        String userGeneratedJob = generateAlphabeticalString(17);
+        userDataLocal.put(userJobKey, userGeneratedJob);
+        Response response = updateUserIncorrectIdPatch(id, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 400);
+        Assert.assertEquals(response.getBody().asString(), "");
+    }
 }

@@ -82,5 +82,21 @@ public class createTests extends setup{
         Assert.assertTrue(getTimestampFromDate(response.path(userCreatedAtKey)) < System.currentTimeMillis());
     }
 
-
+    @Test (description = "Check User create with custom data and structure")
+    public static void createCustomUser () {
+        JSONObject userDataLocal = new JSONObject(customUserData);
+        String position = userDataLocal.get(userCustomKeyPosition).toString();
+        String company = userDataLocal.get(userCustomKeyCompany).toString();
+        Integer salary = Integer.parseInt(userDataLocal.get(userCustomKeySalary).toString());
+        String startDate = userDataLocal.get(userCustomKeyStartDate).toString();
+        Response response = createUser(userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 201);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertEquals(response.path(userCustomKeyPosition), position);
+        Assert.assertEquals(response.path(userCustomKeyCompany), company);
+        Assert.assertEquals(response.path(userCustomKeySalary), salary);
+        Assert.assertEquals(response.path(userCustomKeyStartDate), startDate);
+        Assert.assertTrue(Integer.parseInt( response.path(userIdKey)) > 0 );
+        Assert.assertTrue(getTimestampFromDate(response.path(userCreatedAtKey)) < System.currentTimeMillis());
+    }
 }
