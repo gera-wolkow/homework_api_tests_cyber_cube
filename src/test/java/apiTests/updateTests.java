@@ -15,7 +15,7 @@ public class updateTests extends setup{
 
     @BeforeMethod
     public static void createRandomUserToGetId () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.put(userNameKey,generateAlphabeticalString(16));
         userDataLocal.put(userJobKey,generateAlphabeticalString(19));
         Response response = createUser(userDataLocal);
@@ -26,7 +26,7 @@ public class updateTests extends setup{
 
     @Test (description = "Update generated User with PUT")
     public static void updateUserPut () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         String userGeneratedName = generateAlphabeticalString(15);
         userDataLocal.put(userNameKey,userGeneratedName);
         String userGeneratedJob = generateAlphabeticalString(17);
@@ -41,7 +41,7 @@ public class updateTests extends setup{
 
     @Test (description = "Update generated User with only Name (PUT) if both fields are required", enabled = false)
     public static void updateUserNamePutR () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userJobKey);
         String userGeneratedName = generateAlphabeticalString(15);
         userDataLocal.put(userNameKey, userGeneratedName);
@@ -52,7 +52,7 @@ public class updateTests extends setup{
 
     @Test (description = "Update generated User with only Job (PUT) if both fields are required", enabled = false)
     public static void updateUserJobPutR () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userNameKey);
         String userGeneratedJob = generateAlphabeticalString(16);
         userDataLocal.put(userJobKey, userGeneratedJob);
@@ -63,7 +63,7 @@ public class updateTests extends setup{
 
     @Test (description = "Update generated User with only Name (PUT)")
     public static void updateUserNamePut () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userJobKey);
         String userGeneratedName = generateAlphabeticalString(15);
         userDataLocal.put(userNameKey, userGeneratedName);
@@ -77,7 +77,7 @@ public class updateTests extends setup{
 
     @Test (description = "Update generated User with only Name (PUT)")
     public static void updateUserJobPut () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userNameKey);
         String userGeneratedJob = generateAlphabeticalString(15);
         userDataLocal.put(userJobKey, userGeneratedJob);
@@ -91,7 +91,7 @@ public class updateTests extends setup{
 
     @Test (description = "Update generated User with empty data (PUT)")
     public static void updateUserEmptyPut () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userJobKey);
         userDataLocal.remove(userNameKey);
         Response response = updateUserPut(userId, userDataLocal);
@@ -104,7 +104,7 @@ public class updateTests extends setup{
 
     @Test (description = "Update generated User with PATCH")
     public static void updateUserPatch () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         String userGeneratedName = generateAlphabeticalString(15);
         userDataLocal.put(userNameKey,userGeneratedName);
         String userGeneratedJob = generateAlphabeticalString(17);
@@ -117,9 +117,9 @@ public class updateTests extends setup{
         Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
 
-    @Test (description = "Update generated User with only Name (PATCH)", enabled = false)
+    @Test (description = "Update generated User with only Name (PATCH)")
     public static void updateUserNamePatch () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userJobKey);
         String userGeneratedName = generateAlphabeticalString(15);
         userDataLocal.put(userNameKey, userGeneratedName);
@@ -131,9 +131,9 @@ public class updateTests extends setup{
         Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
 
-    @Test (description = "Update generated User with only Job (PATCH)", enabled = false)
+    @Test (description = "Update generated User with only Job (PATCH)")
     public static void updateUserJobPatch () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userNameKey);
         String userGeneratedJob = generateAlphabeticalString(15);
         userDataLocal.put(userJobKey, userGeneratedJob);
@@ -145,9 +145,9 @@ public class updateTests extends setup{
         Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
 
-    @Test (description = "Update generated User with empty data (PATCH)", enabled = false)
+    @Test (description = "Update generated User with empty data (PATCH)")
     public static void updateUserEmptyPatch () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.remove(userJobKey);
         userDataLocal.remove(userNameKey);
         Response response = updateUserPatch(userId, userDataLocal);

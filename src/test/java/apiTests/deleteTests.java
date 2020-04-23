@@ -15,7 +15,7 @@ public class deleteTests extends setup{
 
     @BeforeMethod
     public static void createRandomUserToGetId () {
-        JSONObject userDataLocal = new JSONObject(userData);
+        JSONObject userDataLocal = new JSONObject(defaultUserData);
         userDataLocal.put(userNameKey,generateAlphabeticalString(17));
         userDataLocal.put(userJobKey,generateAlphabeticalString(13));
         Response response = createUser(userDataLocal);
@@ -30,4 +30,14 @@ public class deleteTests extends setup{
         Assert.assertEquals(response.getStatusCode(), 204);
         Assert.assertEquals(response.getBody().asString(), "");
     }
+
+    @Test
+    public static void deleteZeroUser () {
+        Response response = deleteUser(0);
+        Assert.assertEquals(response.getStatusCode(), 204);
+        Assert.assertEquals(response.getBody().asString(), "");
+    }
+
+
+
 }

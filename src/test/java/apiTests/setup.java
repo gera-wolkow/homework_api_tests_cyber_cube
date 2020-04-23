@@ -17,19 +17,27 @@ import java.io.IOException;
  */
 public class setup extends Main{
 
-    public static JSONObject userData;
+    public static JSONObject defaultUserData;
+    public static JSONObject customUserData;
     public static String userNameKey = "name";
     public static String userJobKey = "job";
     public static String userIdKey = "id";
     public static String userCreatedAtKey = "createdAt";
     public static String userUpdatedAtKey = "updatedAt";
 
+    public static String userCustomKeyPosition = "position";
+    public static String userCustomKeyCompany = "company";
+    public static String userCustomKeySalary = "salary";
+    public static String userCustomKeyStartDate = "startDate";
+
     @BeforeSuite
     public static void healthCheck () throws IOException, ParseException {
         RestAssured.defaultParser = Parser.JSON;
         Assert.assertEquals(getUsers().getStatusCode(), 200);
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader(new File("./src/test/resources/defaultUser.json")));
-        userData = (JSONObject) obj;
+        Object defObj = parser.parse(new FileReader(new File("./src/test/resources/defaultUser.json")));
+        defaultUserData = (JSONObject) defObj;
+        Object cusObj = parser.parse(new FileReader(new File("./src/test/resources/customUser.json")));
+        customUserData = (JSONObject) cusObj;
     }
 }

@@ -28,21 +28,39 @@ public class Main {
         return result;
     }
 
-    public static Response updateUserPut (int number, JSONObject postData) {
+    public static Response updateUserPut (int id, JSONObject postData) {
         Response result;
-        result = given().contentType("application/json; charset=UTF-8").body(postData.toString()).when().put(mainUrl + number).then().extract().response();
+        result = given().contentType("application/json; charset=UTF-8").body(postData.toString()).when().put(mainUrl + id).then().extract().response();
         return result;
     }
 
-    public static Response updateUserPatch (int number, JSONObject postData) {
+    public static Response updateUserIncorrectIdPut (String id, JSONObject postData) {
         Response result;
-        result = given().contentType("application/json; charset=UTF-8").body(postData.toString()).when().patch(mainUrl + number).then().extract().response();
+        result = given().contentType("application/json; charset=UTF-8").body(postData.toString()).when().put(mainUrl + id).then().extract().response();
         return result;
     }
 
-    public static Response deleteUser (int number) {
+    public static Response updateUserPatch (int id, JSONObject postData) {
         Response result;
-        result = given().contentType("application/json; charset=UTF-8").when().delete(mainUrl + number).then().extract().response();
+        result = given().contentType("application/json; charset=UTF-8").body(postData.toString()).when().patch(mainUrl + id).then().extract().response();
+        return result;
+    }
+
+    public static Response updateUserIncorrectIdPatch (String id, JSONObject postData) {
+        Response result;
+        result = given().contentType("application/json; charset=UTF-8").body(postData.toString()).when().patch(mainUrl + id).then().extract().response();
+        return result;
+    }
+
+    public static Response deleteUser (int id) {
+        Response result;
+        result = given().contentType("application/json; charset=UTF-8").when().delete(mainUrl + id).then().extract().response();
+        return result;
+    }
+
+    public static Response deleteUserIncorrectId (String id) {
+        Response result;
+        result = given().contentType("application/json; charset=UTF-8").when().delete(mainUrl + id).then().extract().response();
         return result;
     }
 
