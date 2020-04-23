@@ -3,6 +3,8 @@ package apiTests;
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
 
+import java.util.Random;
+
 import static io.restassured.RestAssured.given;
 
 /**
@@ -39,6 +41,13 @@ public class Main {
         Response result;
         result = given().contentType("application/json; charset=UTF-8").when().delete(mainUrl + number).then().extract().response();
         return result;
+    }
+
+    public static String generateAlphabeticalString (int length) {
+        int leftLimit = 97;
+        int rightLimit = 122;
+        Random random = new Random();
+        return random.ints(leftLimit, rightLimit + 1).limit(length).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 
 }

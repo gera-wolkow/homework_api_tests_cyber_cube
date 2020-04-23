@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class createTests extends setup{
 
-    @Test
+    @Test (description = "Check User create with predefined data")
     public static void createDefaultUser () {
         String userName = userData.get(userNameKey).toString();
         String userJob = userData.get(userJobKey).toString();
@@ -43,7 +43,19 @@ public class createTests extends setup{
         Assert.assertNull(response.getBody());
     }
 
-
-
+    @Test (description = "Check User create with generated data")
+    public static void createUserWithRandomData () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        String userGeneratedName = generateAlphabeticalString(15);
+        userDataLocal.put(userNameKey,userGeneratedName);
+        String userGeneratedJob = generateAlphabeticalString(17);
+        userDataLocal.put(userJobKey, userGeneratedJob);
+        Response response = createUser(userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 201);
+        Assert.assertNotNull(response.getBody());
+        Assert.assertEquals(response.path(userNameKey), userGeneratedName);
+        Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
+        Assert.assertTrue(Integer.parseInt( response.path(userIdKey)) > 0 );
+    }
 
 }
