@@ -24,8 +24,8 @@ public class createTests extends setup{
         Assert.assertTrue(getTimestampFromDate(response.path(userCreatedAtKey)) < System.currentTimeMillis());
     }
 
-    @Test (description = "Check User create in case Name element is required", enabled = false)
-    public static void createDefaultUserWithoutName () {
+    @Test (description = "Check User create in case both fields are required", enabled = false)
+    public static void createDefaultUserWithoutNameR () {
         JSONObject userDataLocal = new JSONObject(userData);
         userDataLocal.remove(userNameKey);
         Response response = createUser(userDataLocal);
@@ -33,8 +33,8 @@ public class createTests extends setup{
         Assert.assertEquals(response.getBody().asString(), "");
     }
 
-    @Test (description = "Check User create in case Job element is required", enabled = false)
-    public static void createDefaultUserWithoutJob () {
+    @Test (description = "Check User create in case both fields are required", enabled = false)
+    public static void createDefaultUserWithoutJobR () {
         JSONObject userDataLocal = new JSONObject(userData);
         userDataLocal.remove(userJobKey);
         Response response = createUser(userDataLocal);
@@ -42,14 +42,28 @@ public class createTests extends setup{
         Assert.assertEquals(response.getBody().asString(), "");
     }
 
-    @Test (description = "Check User create with empty data", enabled = false)
+    @Test (description = "Check User create with empty data in case both fields are required", enabled = false)
+    public static void createUserWithEmptyDataR () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userNameKey);
+        userDataLocal.remove(userJobKey);
+        Response response = createUser(userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 400);
+        Assert.assertEquals(response.getBody().asString(), "");
+    }
+
+    @Test (description = "Check User create with empty data")
     public static void createUserWithEmptyData () {
         JSONObject userDataLocal = new JSONObject(userData);
         userDataLocal.remove(userNameKey);
         userDataLocal.remove(userJobKey);
         Response response = createUser(userDataLocal);
-        Assert.assertEquals(response.getStatusCode(), 400);
-        Assert.assertEquals(response.getBody().asString(), "");
+        Assert.assertEquals(response.getStatusCode(), 201);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertNull(response.path(userNameKey));
+        Assert.assertNull(response.path(userJobKey));
+        Assert.assertTrue(Integer.parseInt( response.path(userIdKey)) > 0 );
+        Assert.assertTrue(getTimestampFromDate(response.path(userCreatedAtKey)) < System.currentTimeMillis());
     }
 
     @Test (description = "Check User create with generated data")

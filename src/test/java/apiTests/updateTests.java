@@ -39,6 +39,69 @@ public class updateTests extends setup{
         Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
 
+    @Test (description = "Update generated User with only Name (PUT) if both fields are required", enabled = false)
+    public static void updateUserNamePutR () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userJobKey);
+        String userGeneratedName = generateAlphabeticalString(15);
+        userDataLocal.put(userNameKey, userGeneratedName);
+        Response response = updateUserPut(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 400);
+        Assert.assertEquals(response.getBody().asString(), "");
+    }
+
+    @Test (description = "Update generated User with only Job (PUT) if both fields are required", enabled = false)
+    public static void updateUserJobPutR () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userNameKey);
+        String userGeneratedJob = generateAlphabeticalString(16);
+        userDataLocal.put(userJobKey, userGeneratedJob);
+        Response response = updateUserPut(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 400);
+        Assert.assertEquals(response.getBody().asString(), "");
+    }
+
+    @Test (description = "Update generated User with only Name (PUT)")
+    public static void updateUserNamePut () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userJobKey);
+        String userGeneratedName = generateAlphabeticalString(15);
+        userDataLocal.put(userNameKey, userGeneratedName);
+        Response response = updateUserPut(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertEquals(response.path(userNameKey), userGeneratedName);
+        Assert.assertNull(response.path(userJobKey));
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
+    }
+
+    @Test (description = "Update generated User with only Name (PUT)")
+    public static void updateUserJobPut () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userNameKey);
+        String userGeneratedJob = generateAlphabeticalString(15);
+        userDataLocal.put(userJobKey, userGeneratedJob);
+        Response response = updateUserPut(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
+        Assert.assertNull(response.path(userNameKey));
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
+    }
+
+    @Test (description = "Update generated User with empty data (PUT)")
+    public static void updateUserEmptyPut () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userJobKey);
+        userDataLocal.remove(userNameKey);
+        Response response = updateUserPut(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertNull(response.path(userNameKey));
+        Assert.assertNull(response.path(userJobKey));
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
+    }
+
     @Test (description = "Update generated User with PATCH")
     public static void updateUserPatch () {
         JSONObject userDataLocal = new JSONObject(userData);
@@ -51,6 +114,47 @@ public class updateTests extends setup{
         Assert.assertNotEquals(response.getBody().asString(), "");
         Assert.assertEquals(response.path(userNameKey), userGeneratedName);
         Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
+    }
+
+    @Test (description = "Update generated User with only Name (PATCH)", enabled = false)
+    public static void updateUserNamePatch () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userJobKey);
+        String userGeneratedName = generateAlphabeticalString(15);
+        userDataLocal.put(userNameKey, userGeneratedName);
+        Response response = updateUserPatch(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertEquals(response.path(userNameKey), userGeneratedName);
+        Assert.assertNotNull(response.path(userJobKey));
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
+    }
+
+    @Test (description = "Update generated User with only Job (PATCH)", enabled = false)
+    public static void updateUserJobPatch () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userNameKey);
+        String userGeneratedJob = generateAlphabeticalString(15);
+        userDataLocal.put(userJobKey, userGeneratedJob);
+        Response response = updateUserPatch(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertEquals(response.path(userJobKey), userGeneratedJob);
+        Assert.assertNotNull(response.path(userNameKey));
+        Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
+    }
+
+    @Test (description = "Update generated User with empty data (PATCH)", enabled = false)
+    public static void updateUserEmptyPatch () {
+        JSONObject userDataLocal = new JSONObject(userData);
+        userDataLocal.remove(userJobKey);
+        userDataLocal.remove(userNameKey);
+        Response response = updateUserPatch(userId, userDataLocal);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertNotEquals(response.getBody().asString(), "");
+        Assert.assertNotNull(response.path(userNameKey));
+        Assert.assertNotNull(response.path(userJobKey));
         Assert.assertTrue(getTimestampFromDate(response.path(userUpdatedAtKey)) < System.currentTimeMillis());
     }
 }

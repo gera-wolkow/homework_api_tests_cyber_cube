@@ -29,7 +29,7 @@ public class setup extends Main{
         RestAssured.defaultParser = Parser.JSON;
         Assert.assertEquals(getUsers().getStatusCode(), 200);
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader(new File("./src/test/resources/user.json")));
+        Object obj = parser.parse(new FileReader(new File("./src/test/resources/defaultUser.json")));
         userData = (JSONObject) obj;
     }
 }

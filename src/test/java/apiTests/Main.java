@@ -2,11 +2,9 @@ package apiTests;
 
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
-import sun.rmi.runtime.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 
