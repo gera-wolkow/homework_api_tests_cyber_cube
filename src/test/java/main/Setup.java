@@ -1,4 +1,4 @@
-package apiTests;
+package main;
 
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
@@ -15,20 +15,20 @@ import java.io.IOException;
 /**
  * Created by iuriiryndin on 22.04.2020
  */
-public class setup extends Main{
+public class Setup extends Main{
 
     public static JSONObject defaultUserData;
     public static JSONObject customUserData;
-    public static String userNameKey = "name";
-    public static String userJobKey = "job";
-    public static String userIdKey = "id";
-    public static String userCreatedAtKey = "createdAt";
-    public static String userUpdatedAtKey = "updatedAt";
+    public static final String USER_NAME_KEY = "name";
+    public static final String USER_JOB_KEY = "job";
+    public static final String USER_ID_KEY = "id";
+    public static final String USER_CREATED_AT_KEY = "createdAt";
+    public static final String USER_UPDATED_AT_KEY = "updatedAt";
 
-    public static String userCustomKeyPosition = "position";
-    public static String userCustomKeyCompany = "company";
-    public static String userCustomKeySalary = "salary";
-    public static String userCustomKeyStartDate = "startDate";
+    public static final String USER_CUSTOM_KEY_POSITION = "position";
+    public static final String USER_CUSTOM_KEY_COMPANY = "company";
+    public static final String USER_CUSTOM_KEY_SALARY = "salary";
+    public static final String USER_CUSTOM_KEY_START_DATE = "startDate";
 
     @BeforeSuite
     public static void healthCheck () throws IOException, ParseException {

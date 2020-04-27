@@ -1,4 +1,4 @@
-package apiTests;
+package main;
 
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
@@ -9,19 +9,19 @@ import org.testng.annotations.Test;
 /**
  * Created by iuriiryndin on 22.04.2020
  */
-public class deleteTests extends setup{
+public class DeleteTests extends Setup {
 
     public static int userId;
 
     @BeforeMethod
     public static void createRandomUserToGetId () {
         JSONObject userDataLocal = new JSONObject(defaultUserData);
-        userDataLocal.put(userNameKey,generateAlphabeticalString(17));
-        userDataLocal.put(userJobKey,generateAlphabeticalString(13));
+        userDataLocal.put(USER_NAME_KEY,generateAlphabeticalString(17));
+        userDataLocal.put(USER_JOB_KEY,generateAlphabeticalString(13));
         Response response = createUser(userDataLocal);
         Assert.assertEquals(response.getStatusCode(), 201);
         Assert.assertNotEquals(response.getBody().asString(), "");
-        userId = Integer.parseInt(response.path(userIdKey));
+        userId = Integer.parseInt(response.path(USER_ID_KEY));
     }
 
     @Test (description = "Delete generated user")
